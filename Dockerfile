@@ -6,7 +6,7 @@ WORKDIR /app
 #RUN gradle wrapper --no-daemon
 RUN gradle build --no-daemon copyDeps 
 
-FROM anapsix/alpine-java:8_server-jre
+FROM openjdk:8-alpine
 #MAINTAINER Eric Goebelbecker "eric@ericgoebelbecker.com"
 ENV JAVA_VERSION 8u31
 ENV PACKAGE_ROOT /app
