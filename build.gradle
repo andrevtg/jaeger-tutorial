@@ -31,6 +31,7 @@ targetCompatibility = 1.8
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging'
     compile group: 'io.opentracing.contrib', name: 'opentracing-spring-web-starter', version: '4.1.0'
     annotationProcessor "org.projectlombok:lombok:1.18.4"
     compile "org.projectlombok:lombok:1.18.4"
@@ -44,30 +45,3 @@ jar {
     exclude "*.xml"
 }
 
-task copyDeps( type: Copy) {
-    from(configurations.runtime) {
-        include "*.jar"
-        exclude { details -> details.file.name.startsWith('maven') }
-    }
-    from('build/libs') {
-        include "*.jar"
-    }
-    into rootProject.rootDir.getAbsolutePath() + "/docker/app/JaegerTutorial/libs"
-    rename{
-        String fileName -> fileName.replace('.original', '')
-    }
-}
-
-task copyLocal( type: Copy) {
-    from(configurations.runtime) {
-        include "*.jar"
-        exclude { details -> details.file.name.startsWith('maven') }
-    }
-    from('build/libs') {
-        include "*.original"
-    }
-    into rootProject.rootDir.getAbsolutePath() + "/local/libs"
-    rename{
-        String fileName -> fileName.replace('.original', '')
-    }
-}

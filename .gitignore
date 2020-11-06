@@ -16,3 +16,5 @@ bin/
 .classpath
 gradle/*
 docker/app/JaegerTutorial/libs/*
+docker/app/libs/*.jar
+
