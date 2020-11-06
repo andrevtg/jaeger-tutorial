@@ -1,18 +1,25 @@
-group 'com.egoebelbecker.jaegertutorial'
-version '1.0-SNAPSHOT'
 
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.5.RELEASE")
     }
 }
 
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.3.5.RELEASE'
+}
+
+apply plugin: 'io.spring.dependency-management'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+
+group 'com.egoebelbecker.jaegertutorial'
+version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -24,6 +31,7 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile group: 'io.opentracing.contrib', name: 'opentracing-spring-web-starter', version: '4.1.0'
     annotationProcessor "org.projectlombok:lombok:1.18.4"
     compile "org.projectlombok:lombok:1.18.4"
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
@@ -42,7 +50,7 @@ task copyDeps( type: Copy) {
         exclude { details -> details.file.name.startsWith('maven') }
     }
     from('build/libs') {
-        include "*.original"
+        include "*.jar"
     }
     into rootProject.rootDir.getAbsolutePath() + "/docker/app/JaegerTutorial/libs"
     rename{

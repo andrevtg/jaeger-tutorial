@@ -14,3 +14,5 @@ bin/
 .settings/
 .project
 .classpath
+gradle/*
+docker/app/JaegerTutorial/libs/*

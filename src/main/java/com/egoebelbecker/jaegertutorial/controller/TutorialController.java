@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -64,7 +65,8 @@ public class TutorialController {
     @RequestMapping(value = "/api/tutorial/1.0/employees", method = RequestMethod.POST)
     public ResponseEntity createEmployee(@RequestBody Employee employee) {
 
-        Span span = tracer.buildSpan("create employee").start();
+        Span serverSpan = tracer.activeSpan();
+        Span span = tracer.buildSpan("create employee").asChildOf(serverSpan.context()).start();
 
         HttpStatus status = HttpStatus.FORBIDDEN;
 
@@ -87,7 +89,8 @@ public class TutorialController {
         Employee employee = null;
         HttpStatus status = HttpStatus.NOT_FOUND;
 
-        Span span = tracer.buildSpan("get employee").start();
+        Span serverSpan = tracer.activeSpan();
+        Span span = tracer.buildSpan("get employee").asChildOf(serverSpan.context()).start();
 
         try {
             int id = Integer.parseInt(idString);
@@ -109,7 +112,8 @@ public class TutorialController {
     @RequestMapping(value = "/api/tutorial/1.0/employees", method = RequestMethod.GET)
     public ResponseEntity getAllEmployees() {
 
-        Span span = tracer.buildSpan("get employees").start();
+        Span serverSpan = tracer.activeSpan();
+        Span span = tracer.buildSpan("get employees").asChildOf(serverSpan.context()).start();
 
         log.info("Receive Request to Get All Employees");
         Collection<Employee> employees = employeeService.loadAllEmployees();
@@ -123,7 +127,8 @@ public class TutorialController {
     @RequestMapping(value = "/api/tutorial/1.0/employees/{id}", method = RequestMethod.PUT)
     public ResponseEntity updateEmployee(@PathVariable("id") String idString, @RequestBody Employee employee) {
 
-        Span span = tracer.buildSpan("update employee").start();
+        Span serverSpan = tracer.activeSpan();
+        Span span = tracer.buildSpan("update employee").asChildOf(serverSpan.context()).start();
 
         HttpStatus status = HttpStatus.NO_CONTENT;
 
@@ -146,7 +151,8 @@ public class TutorialController {
     @RequestMapping(value = "/api/tutorial/1.0/employees/{id}", method = RequestMethod.PATCH)
     public ResponseEntity patchEmployee(@PathVariable("id") String idString, @RequestBody Employee employee) {
 
-        Span span = tracer.buildSpan("get employees").start();
+        Span serverSpan = tracer.activeSpan();
+        Span span = tracer.buildSpan("patch employee").asChildOf(serverSpan.context()).start();
 
         HttpStatus status = HttpStatus.NO_CONTENT;
 
@@ -169,7 +175,8 @@ public class TutorialController {
     @RequestMapping(value = "/api/tutorial/1.0/employees/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteEmployee(@PathVariable("id") String idString) {
 
-        Span span = tracer.buildSpan("delete employee").start();
+        Span serverSpan = tracer.activeSpan();
+        Span span = tracer.buildSpan("delete employee").asChildOf(serverSpan.context()).start();
 
         HttpStatus status = HttpStatus.NO_CONTENT;
 
