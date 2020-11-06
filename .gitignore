@@ -9,3 +9,8 @@ out
 gen
 .gradle/
 build
+.vscode/
+bin/
+.settings/
+.project
+.classpath
