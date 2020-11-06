@@ -30,7 +30,7 @@ targetCompatibility = 1.8
 
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     compile group: 'io.opentracing.contrib', name: 'opentracing-spring-web-starter', version: '4.1.0'
     annotationProcessor "org.projectlombok:lombok:1.18.4"
     compile "org.projectlombok:lombok:1.18.4"
